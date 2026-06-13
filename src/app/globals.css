@@ -1,26 +1,248 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ── Theme: Night Stadium (dark, default) ────────────────────────────────── */
+:root,
+[data-theme="dark"] {
+  --bg: #070b14;
+  --surface: #0c1020;
+  --surface-2: #121830;
+  --border: rgba(255,255,255,0.07);
+  --border-strong: rgba(255,255,255,0.14);
+  --text: #eef2ff;
+  --muted: rgba(238,242,255,0.55);
+  --dim: rgba(238,242,255,0.25);
+  --accent: #6366f1;
+  --accent-2: #22d3ee;
+  --accent-bg: rgba(99,102,241,0.12);
+  --accent-glow: rgba(99,102,241,0.35);
+  --live: #ef4444;
+  --live-bg: rgba(239,68,68,0.1);
+  --live-glow: rgba(239,68,68,0.3);
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --card: rgba(255,255,255,0.025);
+  --hero-1: rgba(99,102,241,0.2);
+  --hero-2: rgba(239,68,68,0.1);
+  --hero-3: rgba(34,211,238,0.1);
+  --pitch: rgba(34,197,94,0.04);
+  --pitch-line: rgba(255,255,255,0.04);
+  --scrollbar: rgba(255,255,255,0.08);
+  color-scheme: dark;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ── Theme: Match Day (light) ────────────────────────────────────────────── */
+[data-theme="light"] {
+  --bg: #f0f4ff;
+  --surface: #ffffff;
+  --surface-2: #e8edff;
+  --border: rgba(30,30,100,0.09);
+  --border-strong: rgba(30,30,100,0.18);
+  --text: #090920;
+  --muted: rgba(9,9,32,0.58);
+  --dim: rgba(9,9,32,0.3);
+  --accent: #4338ca;
+  --accent-2: #0891b2;
+  --accent-bg: rgba(67,56,202,0.09);
+  --accent-glow: rgba(67,56,202,0.2);
+  --live: #dc2626;
+  --live-bg: rgba(220,38,38,0.07);
+  --live-glow: rgba(220,38,38,0.2);
+  --success: #16a34a;
+  --warning: #d97706;
+  --card: rgba(30,30,100,0.03);
+  --hero-1: rgba(67,56,202,0.12);
+  --hero-2: rgba(220,38,38,0.07);
+  --hero-3: rgba(8,145,178,0.07);
+  --pitch: rgba(21,128,61,0.06);
+  --pitch-line: rgba(0,0,0,0.06);
+  --scrollbar: rgba(0,0,0,0.1);
+  color-scheme: light;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ── Theme: Ultras (vivid dark, ultra-saturated) ─────────────────────────── */
+[data-theme="ultras"] {
+  --bg: #03000f;
+  --surface: #07001d;
+  --surface-2: #0e0030;
+  --border: rgba(167,139,250,0.16);
+  --border-strong: rgba(167,139,250,0.32);
+  --text: #ffffff;
+  --muted: rgba(255,255,255,0.68);
+  --dim: rgba(255,255,255,0.32);
+  --accent: #a78bfa;
+  --accent-2: #22d3ee;
+  --accent-bg: rgba(167,139,250,0.14);
+  --accent-glow: rgba(167,139,250,0.5);
+  --live: #fb7185;
+  --live-bg: rgba(251,113,133,0.12);
+  --live-glow: rgba(251,113,133,0.48);
+  --success: #4ade80;
+  --warning: #fbbf24;
+  --card: rgba(167,139,250,0.06);
+  --hero-1: rgba(167,139,250,0.3);
+  --hero-2: rgba(251,113,133,0.2);
+  --hero-3: rgba(34,211,238,0.2);
+  --pitch: rgba(74,222,128,0.05);
+  --pitch-line: rgba(167,139,250,0.08);
+  --scrollbar: rgba(167,139,250,0.18);
+  color-scheme: dark;
+}
+
+/* ── Base reset ──────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background 0.35s ease, color 0.2s ease;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  min-height: 100dvh;
+  overflow-x: hidden;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  transition: background 0.35s ease;
+}
+
+/* ── Scrollbar ───────────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--scrollbar); border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: var(--border-strong); }
+
+.scrollbar-none::-webkit-scrollbar { display: none; }
+.scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ── Theme-aware tokens ──────────────────────────────────────────────────── */
+.theme-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.theme-surface-2 {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+}
+
+/* ── Football pitch background pattern ───────────────────────────────────── */
+.pitch-bg {
+  background-color: var(--pitch);
+  background-image:
+    /* Centre circle */
+    radial-gradient(circle 80px at 50% 50%, transparent 78px, var(--pitch-line) 79px, var(--pitch-line) 81px, transparent 82px),
+    /* Centre spot */
+    radial-gradient(circle 3px at 50% 50%, var(--pitch-line) 3px, transparent 4px),
+    /* Halfway line */
+    linear-gradient(to right, transparent 49.8%, var(--pitch-line) 49.8%, var(--pitch-line) 50.2%, transparent 50.2%),
+    /* Pitch stripes */
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 80px,
+      var(--pitch) 80px,
+      var(--pitch) 160px
+    );
+}
+
+/* ── Animated gradient orbs ──────────────────────────────────────────────── */
+@keyframes float-slow {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(24px, -18px) scale(1.05); }
+  66% { transform: translate(-12px, 12px) scale(0.97); }
+}
+
+@keyframes float-med {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-28px, 22px) scale(1.08); }
+}
+
+@keyframes float-fast {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(14px, -20px) scale(1.04); }
+  75% { transform: translate(-14px, 8px) scale(0.96); }
+}
+
+.orb-1 { animation: float-slow 14s ease-in-out infinite; }
+.orb-2 { animation: float-med 10s ease-in-out infinite; }
+.orb-3 { animation: float-slow 18s ease-in-out infinite reverse; }
+.orb-4 { animation: float-fast 8s ease-in-out infinite; }
+
+/* ── Text gradient ───────────────────────────────────────────────────────── */
+.text-gradient {
+  background: linear-gradient(135deg, var(--text) 0%, var(--muted) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-accent {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-live {
+  background: linear-gradient(135deg, var(--live) 0%, var(--warning) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Glow effects ────────────────────────────────────────────────────────── */
+.glow-card-live {
+  box-shadow: 0 0 0 1px var(--live-glow), 0 8px 40px var(--live-glow);
+}
+
+.glow-card-accent {
+  box-shadow: 0 0 0 1px var(--accent-glow), 0 8px 40px var(--accent-glow);
+}
+
+/* ── Shimmer loading ─────────────────────────────────────────────────────── */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--surface-2) 0%,
+    var(--border-strong) 50%,
+    var(--surface-2) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.6s ease-in-out infinite;
+  border-radius: 6px;
+}
+
+/* ── Live pulse ring ─────────────────────────────────────────────────────── */
+@keyframes live-ring {
+  0% { box-shadow: 0 0 0 0 var(--live-glow); }
+  60% { box-shadow: 0 0 0 6px transparent; }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+
+.live-ring {
+  animation: live-ring 1.8s ease-out infinite;
+}
+
+/* ── Goal flash ──────────────────────────────────────────────────────────── */
+@keyframes goal-flash {
+  0%, 100% { opacity: 0; }
+  10%, 90% { opacity: 1; }
+}
+
+/* ── Card lift on hover ──────────────────────────────────────────────────── */
+.card-lift {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card-lift:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
 }
