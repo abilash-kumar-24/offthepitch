@@ -149,6 +149,27 @@ body {
     );
 }
 
+/* ── Football background animations ─────────────────────────────────────── */
+@keyframes float-ball-a {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  20%  { transform: translate(50px, -38px) rotate(80deg); }
+  50%  { transform: translate(20px, -75px) rotate(195deg); }
+  75%  { transform: translate(-38px, -42px) rotate(295deg); }
+}
+
+@keyframes float-ball-b {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  30%  { transform: translate(-65px, 45px) rotate(115deg); }
+  65%  { transform: translate(35px, 80px) rotate(255deg); }
+}
+
+@keyframes float-ball-c {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  15%  { transform: translate(75px, 22px) rotate(58deg); }
+  55%  { transform: translate(-50px, 68px) rotate(205deg); }
+  80%  { transform: translate(60px, -28px) rotate(308deg); }
+}
+
 /* ── Animated gradient orbs ──────────────────────────────────────────────── */
 @keyframes float-slow {
   0%, 100% { transform: translate(0, 0) scale(1); }
