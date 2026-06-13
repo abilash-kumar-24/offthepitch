@@ -12,6 +12,11 @@ export type MarketType =
   | 'NEXT_SUB'
   | 'STOPPAGE_GOAL'
   | 'RED_CARD_THREAT'
+  | 'GOAL_RESPONSE'
+  | 'BRACE_HUNT'
+  | 'YELLOW_WATCH'
+  | 'RED_ADVANTAGE'
+  | 'SUB_SPARK'
 
 export type MarketStatus = 'OPEN' | 'LOCKED' | 'RESOLVED' | 'VOID'
 

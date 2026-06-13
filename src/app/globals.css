@@ -3,88 +3,88 @@
 /* ── Theme: Night Stadium (dark, default) ────────────────────────────────── */
 :root,
 [data-theme="dark"] {
-  --bg: #070b14;
-  --surface: #0c1020;
-  --surface-2: #121830;
-  --border: rgba(255,255,255,0.07);
-  --border-strong: rgba(255,255,255,0.14);
-  --text: #eef2ff;
-  --muted: rgba(238,242,255,0.55);
-  --dim: rgba(238,242,255,0.25);
-  --accent: #6366f1;
-  --accent-2: #22d3ee;
-  --accent-bg: rgba(99,102,241,0.12);
-  --accent-glow: rgba(99,102,241,0.35);
-  --live: #ef4444;
-  --live-bg: rgba(239,68,68,0.1);
-  --live-glow: rgba(239,68,68,0.3);
-  --success: #22c55e;
-  --warning: #f59e0b;
-  --card: rgba(255,255,255,0.025);
-  --hero-1: rgba(99,102,241,0.2);
-  --hero-2: rgba(239,68,68,0.1);
-  --hero-3: rgba(34,211,238,0.1);
-  --pitch: rgba(34,197,94,0.04);
-  --pitch-line: rgba(255,255,255,0.04);
-  --scrollbar: rgba(255,255,255,0.08);
+  --bg: #060a12;
+  --surface: #0b0f1e;
+  --surface-2: #10162a;
+  --border: rgba(255,255,255,0.08);
+  --border-strong: rgba(255,255,255,0.18);
+  --text: #ffffff;
+  --muted: rgba(255,255,255,0.78);
+  --dim: rgba(255,255,255,0.42);
+  --accent: #818cf8;
+  --accent-2: #34d399;
+  --accent-bg: rgba(129,140,248,0.14);
+  --accent-glow: rgba(129,140,248,0.4);
+  --live: #f87171;
+  --live-bg: rgba(248,113,113,0.12);
+  --live-glow: rgba(248,113,113,0.35);
+  --success: #4ade80;
+  --warning: #fbbf24;
+  --card: rgba(255,255,255,0.03);
+  --hero-1: rgba(129,140,248,0.22);
+  --hero-2: rgba(248,113,113,0.12);
+  --hero-3: rgba(52,211,153,0.1);
+  --pitch: rgba(52,211,153,0.045);
+  --pitch-line: rgba(255,255,255,0.05);
+  --scrollbar: rgba(255,255,255,0.1);
   color-scheme: dark;
 }
 
 /* ── Theme: Match Day (light) ────────────────────────────────────────────── */
 [data-theme="light"] {
-  --bg: #f0f4ff;
+  --bg: #eef2ff;
   --surface: #ffffff;
-  --surface-2: #e8edff;
-  --border: rgba(30,30,100,0.09);
-  --border-strong: rgba(30,30,100,0.18);
-  --text: #090920;
-  --muted: rgba(9,9,32,0.58);
-  --dim: rgba(9,9,32,0.3);
-  --accent: #4338ca;
-  --accent-2: #0891b2;
-  --accent-bg: rgba(67,56,202,0.09);
-  --accent-glow: rgba(67,56,202,0.2);
+  --surface-2: #e0e7ff;
+  --border: rgba(30,30,100,0.1);
+  --border-strong: rgba(30,30,100,0.22);
+  --text: #060618;
+  --muted: rgba(6,6,24,0.78);
+  --dim: rgba(6,6,24,0.45);
+  --accent: #4f46e5;
+  --accent-2: #059669;
+  --accent-bg: rgba(79,70,229,0.1);
+  --accent-glow: rgba(79,70,229,0.25);
   --live: #dc2626;
-  --live-bg: rgba(220,38,38,0.07);
-  --live-glow: rgba(220,38,38,0.2);
+  --live-bg: rgba(220,38,38,0.08);
+  --live-glow: rgba(220,38,38,0.25);
   --success: #16a34a;
   --warning: #d97706;
-  --card: rgba(30,30,100,0.03);
-  --hero-1: rgba(67,56,202,0.12);
-  --hero-2: rgba(220,38,38,0.07);
-  --hero-3: rgba(8,145,178,0.07);
-  --pitch: rgba(21,128,61,0.06);
-  --pitch-line: rgba(0,0,0,0.06);
-  --scrollbar: rgba(0,0,0,0.1);
+  --card: rgba(30,30,100,0.035);
+  --hero-1: rgba(79,70,229,0.14);
+  --hero-2: rgba(220,38,38,0.08);
+  --hero-3: rgba(5,150,105,0.08);
+  --pitch: rgba(21,128,61,0.07);
+  --pitch-line: rgba(0,0,0,0.07);
+  --scrollbar: rgba(0,0,0,0.12);
   color-scheme: light;
 }
 
 /* ── Theme: Ultras (vivid dark, ultra-saturated) ─────────────────────────── */
 [data-theme="ultras"] {
-  --bg: #03000f;
-  --surface: #07001d;
-  --surface-2: #0e0030;
-  --border: rgba(167,139,250,0.16);
-  --border-strong: rgba(167,139,250,0.32);
+  --bg: #02000c;
+  --surface: #060018;
+  --surface-2: #0c0028;
+  --border: rgba(196,181,253,0.18);
+  --border-strong: rgba(196,181,253,0.38);
   --text: #ffffff;
-  --muted: rgba(255,255,255,0.68);
-  --dim: rgba(255,255,255,0.32);
-  --accent: #a78bfa;
-  --accent-2: #22d3ee;
-  --accent-bg: rgba(167,139,250,0.14);
-  --accent-glow: rgba(167,139,250,0.5);
+  --muted: rgba(255,255,255,0.88);
+  --dim: rgba(255,255,255,0.52);
+  --accent: #c4b5fd;
+  --accent-2: #34d399;
+  --accent-bg: rgba(196,181,253,0.16);
+  --accent-glow: rgba(196,181,253,0.55);
   --live: #fb7185;
-  --live-bg: rgba(251,113,133,0.12);
-  --live-glow: rgba(251,113,133,0.48);
+  --live-bg: rgba(251,113,133,0.14);
+  --live-glow: rgba(251,113,133,0.52);
   --success: #4ade80;
   --warning: #fbbf24;
-  --card: rgba(167,139,250,0.06);
-  --hero-1: rgba(167,139,250,0.3);
-  --hero-2: rgba(251,113,133,0.2);
-  --hero-3: rgba(34,211,238,0.2);
-  --pitch: rgba(74,222,128,0.05);
-  --pitch-line: rgba(167,139,250,0.08);
-  --scrollbar: rgba(167,139,250,0.18);
+  --card: rgba(196,181,253,0.07);
+  --hero-1: rgba(196,181,253,0.32);
+  --hero-2: rgba(251,113,133,0.22);
+  --hero-3: rgba(52,211,153,0.18);
+  --pitch: rgba(74,222,128,0.055);
+  --pitch-line: rgba(196,181,253,0.1);
+  --scrollbar: rgba(196,181,253,0.2);
   color-scheme: dark;
 }
 
@@ -245,4 +245,73 @@ body {
 .card-lift:hover {
   transform: translateY(-3px);
   box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+
+/* ── Match-state live background glow ───────────────────────────────────── */
+.match-room-live {
+  position: relative;
+}
+.match-room-live::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse 70% 25% at 50% 0%, var(--hero-2), transparent 80%);
+  z-index: 0;
+}
+
+/* ── Tension breathe — for high-pressure moments ────────────────────────── */
+@keyframes tension-breathe {
+  0%, 100% { box-shadow: 0 0 0 1px rgba(248,113,113,0.12), 0 0 20px rgba(248,113,113,0.04); }
+  50%       { box-shadow: 0 0 0 1px rgba(248,113,113,0.35), 0 0 40px rgba(248,113,113,0.12); }
+}
+
+.tension-ring {
+  animation: tension-breathe 2.2s ease-in-out infinite;
+}
+
+/* ── Goal burst — fires on score change ─────────────────────────────────── */
+@keyframes goal-burst {
+  0%   { opacity: 0; transform: scale(0.9); }
+  12%  { opacity: 1; transform: scale(1.02); }
+  80%  { opacity: 0.8; }
+  100% { opacity: 0; transform: scale(1.1); }
+}
+
+.goal-burst {
+  animation: goal-burst 2.8s ease-out forwards;
+}
+
+/* ── Stat number highlight ───────────────────────────────────────────────── */
+.stat-value {
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  color: var(--text);
+}
+
+/* ── Points flash on change ──────────────────────────────────────────────── */
+@keyframes pts-flash {
+  0%   { background-color: var(--accent-bg); }
+  30%  { background-color: rgba(129,140,248,0.35); }
+  100% { background-color: var(--accent-bg); }
+}
+
+.pts-flash {
+  animation: pts-flash 0.6s ease-out;
+}
+
+/* ── Event badge chip ─────────────────────────────────────────────────────── */
+.event-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background: var(--accent-bg);
+  color: var(--accent);
+  border: 1px solid var(--accent-glow);
 }

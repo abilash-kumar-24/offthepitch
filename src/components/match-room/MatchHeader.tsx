@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { TeamBadge } from '@/components/ui/TeamBadge'
 import { getTeam } from '@/data/teams'
 import { matchPhaseLabel, isMatchLive } from '@/lib/match-engine'
+import { useSessionStore } from '@/store/sessionStore'
 import type { LiveMatch } from '@/types/match'
 
 interface Props {
@@ -64,6 +65,7 @@ export function MatchHeader({ match, lastGoalFlash }: Props) {
   const home = getTeam(match.homeTeam.code)
   const away = getTeam(match.awayTeam.code)
   const flashAge = Date.now() - lastGoalFlash
+  const { points, streak } = useSessionStore()
 
   return (
     <div className="relative">
@@ -110,13 +112,36 @@ export function MatchHeader({ match, lastGoalFlash }: Props) {
           {/* Score center */}
           <div className="flex flex-col items-center gap-2">
             <div className="flex items-center gap-4 text-5xl sm:text-6xl">
-              <ScoreDigit value={match.homeTeam.score} color={match.homeTeam.score > match.awayTeam.score ? home.accent : 'var(--text)'} />
+              <ScoreDigit value={match.homeTeam.score} color={home.accent} />
               <span className="text-4xl font-thin" style={{ color: 'var(--dim)' }}>–</span>
-              <ScoreDigit value={match.awayTeam.score} color={match.awayTeam.score > match.homeTeam.score ? away.accent : 'var(--text)'} />
+              <ScoreDigit value={match.awayTeam.score} color={away.accent} />
             </div>
             <PhaseTag match={match} />
+
+            {/* Always-visible points pill */}
+            <motion.div
+              key={points}
+              initial={{ scale: 1.08, opacity: 0.6 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.35, type: 'spring', stiffness: 320 }}
+              className="flex items-center gap-1.5 px-3 py-1 rounded-full"
+              style={{
+                background: 'var(--accent-bg)',
+                border: '1px solid var(--accent-glow)',
+              }}
+            >
+              <span className="text-[11px] font-black tabular-nums" style={{ color: 'var(--accent)' }}>
+                {points.toLocaleString()} pts
+              </span>
+              {streak >= 2 && (
+                <span className="text-[10px] font-bold" style={{ color: 'var(--warning)' }}>
+                  🔥{streak}
+                </span>
+              )}
+            </motion.div>
+
             {match.groupStage && (
-              <span className="text-[10px] uppercase tracking-widest mt-1" style={{ color: 'var(--dim)' }}>
+              <span className="text-[10px] uppercase tracking-widest" style={{ color: 'var(--dim)' }}>
                 {match.groupStage} · {match.venue}
               </span>
             )}

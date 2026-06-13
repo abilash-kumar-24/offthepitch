@@ -25,11 +25,12 @@ const POLL_INTERVAL_IDLE = 30000
 
 export function MatchRoomClient({ initialMatch }: Props) {
   const { currentMatch, pressure, lastGoalFlash, setCurrentMatch, updateCurrentMatch } = useMatchStore()
-  const { tickMarkets, clearForMatch, activeMarkets } = useMarketStore()
+  const { tickMarkets, clearForMatch, activeMarkets, spawnEventMarket } = useMarketStore()
   const { points, streak, bestStreak, totalCalls, correctCalls, applyResults, resetForMatch } = useSessionStore()
   const { results } = useMarketStore()
 
   const pollingRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const prevEventIdsRef = useRef<Set<string>>(new Set(initialMatch.events.map(e => e.id)))
   const matchId = initialMatch.id
 
   // Hydrate store on mount
@@ -46,7 +47,15 @@ export function MatchRoomClient({ initialMatch }: Props) {
         const res = await fetch(`/api/match/${matchId}`)
         if (!res.ok) return
         const fresh: LiveMatch = await res.json()
+
+        // Detect events that appeared since last poll before updating store
+        const freshEvents = fresh.events.filter(e => !prevEventIdsRef.current.has(e.id))
+        prevEventIdsRef.current = new Set(fresh.events.map(e => e.id))
+
         updateCurrentMatch(fresh)
+
+        // Trigger event-based markets for each new event
+        freshEvents.forEach(e => spawnEventMarket(fresh, e))
 
         // Tick market engine
         const newResults = tickMarkets(fresh, streak)
@@ -85,7 +94,7 @@ export function MatchRoomClient({ initialMatch }: Props) {
   }
 
   return (
-    <div className="min-h-screen" style={{ background: 'var(--bg)' }}>
+    <div className={`min-h-screen ${live ? 'match-room-live' : ''}`} style={{ background: 'var(--bg)' }}>
       {/* Top nav */}
       <div
         className="sticky top-0 z-50 backdrop-blur-xl"

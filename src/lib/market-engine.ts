@@ -233,6 +233,139 @@ export function buildRedCardThreatMarket(match: LiveMatch): Market {
   }
 }
 
+// ── Event-triggered market builders ──────────────────────────────────────────
+
+/** After a goal — can the conceding team hit back immediately? */
+export function buildGoalResponseMarket(match: LiveMatch, goalEvent: MatchEvent): Market {
+  const scoringSide = goalEvent.type === 'OWN_GOAL'
+    ? (goalEvent.side === 'home' ? 'away' : 'home')
+    : goalEvent.side
+  const concedingSide = scoringSide === 'home' ? 'away' : 'home'
+  const scoringCode  = scoringSide  === 'home' ? match.homeTeam.code : match.awayTeam.code
+  const concedingCode = concedingSide === 'home' ? match.homeTeam.code : match.awayTeam.code
+  const shortName = goalEvent.playerName?.split(' ').slice(-1)[0]
+
+  return {
+    id: uid(),
+    type: 'GOAL_RESPONSE',
+    question: shortName
+      ? `${shortName} strikes for ${scoringCode}. Does ${concedingCode} fire back?`
+      : `${scoringCode} lead. Does ${concedingCode} respond immediately?`,
+    options: [
+      { id: 'yes', label: 'Fire Back!', subLabel: `${concedingCode} levels it`, difficulty: 3 },
+      { id: 'no',  label: 'Lead Holds', subLabel: `${scoringCode} stays ahead`, difficulty: 2 },
+    ],
+    status: 'OPEN',
+    opensAt: Date.now(),
+    locksAt: Date.now() + 55000,
+    minuteContext: match.minute,
+    context: { concedingSide },
+  }
+}
+
+/** After a named goal scorer — do they grab a brace? */
+export function buildBraceHuntMarket(match: LiveMatch, goalEvent: MatchEvent): Market {
+  const scorerSide = goalEvent.type === 'OWN_GOAL'
+    ? (goalEvent.side === 'home' ? 'away' : 'home')
+    : goalEvent.side
+  const scorerName = goalEvent.playerName ?? ''
+  const shortName  = scorerName ? scorerName.split(' ').slice(-1)[0] : null
+  const scorerCode = scorerSide === 'home' ? match.homeTeam.code : match.awayTeam.code
+
+  return {
+    id: uid(),
+    type: 'BRACE_HUNT',
+    question: shortName
+      ? `Can ${shortName} add a second and grab the brace?`
+      : `Can ${scorerCode} double up with another goal?`,
+    options: [
+      { id: 'yes', label: 'Brace!', subLabel: shortName ? `${shortName} scores again` : `${scorerCode} add a second`, difficulty: 3 },
+      { id: 'no',  label: 'One & Done', subLabel: 'No repeat', difficulty: 1 },
+    ],
+    status: 'OPEN',
+    opensAt: Date.now(),
+    locksAt: Date.now() + 65000,
+    minuteContext: match.minute,
+    context: { scorerSide, scorerName },
+  }
+}
+
+/** After a yellow card — will they lose their head and see a second? */
+export function buildYellowWatchMarket(match: LiveMatch, cardEvent: MatchEvent): Market {
+  const warnedSide = cardEvent.side
+  const playerName = cardEvent.playerName ?? ''
+  const shortName  = playerName ? playerName.split(' ').slice(-1)[0] : null
+  const teamCode   = warnedSide === 'home' ? match.homeTeam.code : match.awayTeam.code
+
+  return {
+    id: uid(),
+    type: 'YELLOW_WATCH',
+    question: shortName
+      ? `${shortName} on a yellow — does the ref reach for a second?`
+      : `${teamCode} player on a yellow. Do they push their luck?`,
+    options: [
+      { id: 'yes', label: 'Seeing Red', subLabel: shortName ? `${shortName} sent off` : 'Sees second yellow', difficulty: 3 },
+      { id: 'no',  label: 'Keeps Cool', subLabel: 'Stays on the pitch', difficulty: 1 },
+    ],
+    status: 'OPEN',
+    opensAt: Date.now(),
+    locksAt: Date.now() + 75000,
+    minuteContext: match.minute,
+    context: { warnedSide, playerName },
+  }
+}
+
+/** After a red card — does the team with the man advantage capitalise? */
+export function buildRedAdvantageMarket(match: LiveMatch, cardEvent: MatchEvent): Market {
+  const reducedSide   = cardEvent.side
+  const advantageSide = reducedSide === 'home' ? 'away' : 'home'
+  const reducedCode   = reducedSide   === 'home' ? match.homeTeam.code : match.awayTeam.code
+  const advantageCode = advantageSide === 'home' ? match.homeTeam.code : match.awayTeam.code
+  const shortName = cardEvent.playerName?.split(' ').slice(-1)[0]
+
+  return {
+    id: uid(),
+    type: 'RED_ADVANTAGE',
+    question: shortName
+      ? `${shortName} walks — ${reducedCode} down to 10. Does ${advantageCode} capitalise?`
+      : `${reducedCode} reduced to 10 men. Does ${advantageCode} make it count?`,
+    options: [
+      { id: 'yes', label: 'Exploit It', subLabel: `${advantageCode} scores`, difficulty: 2 },
+      { id: 'no',  label: 'Hold Firm',  subLabel: `${reducedCode} weathers the storm`, difficulty: 3 },
+    ],
+    status: 'OPEN',
+    opensAt: Date.now(),
+    locksAt: Date.now() + 75000,
+    minuteContext: match.minute,
+    context: { advantageSide },
+  }
+}
+
+/** After a substitution — does the fresh leg make an immediate impact? */
+export function buildSubSparkMarket(match: LiveMatch, subEvent: MatchEvent): Market {
+  const subbingSide = subEvent.side
+  const subName     = subEvent.playerName
+  const shortName   = subName?.split(' ').slice(-1)[0]
+  const teamCode    = subbingSide === 'home' ? match.homeTeam.code : match.awayTeam.code
+
+  return {
+    id: uid(),
+    type: 'SUB_SPARK',
+    question: shortName
+      ? `${shortName} is on for ${teamCode}. Impact sub?`
+      : `${teamCode} make a change — fresh legs, fresh threat?`,
+    options: [
+      { id: 'yes', label: 'Impact!', subLabel: `${teamCode} score next`, difficulty: 3 },
+      { id: 'no',  label: 'No Change', subLabel: 'No immediate effect', difficulty: 1 },
+    ],
+    status: 'OPEN',
+    opensAt: Date.now(),
+    locksAt: Date.now() + 75000,
+    minuteContext: match.minute,
+    context: { subbingSide },
+  }
+}
+
 // ── Market selector: pick the most contextually relevant market ───────────────
 export function selectNextMarket(match: LiveMatch, recentlyUsed: MarketType[]): Market {
   const minute = match.minute
@@ -309,6 +442,7 @@ export function selectNextMarket(match: LiveMatch, recentlyUsed: MarketType[]): 
     default:               return buildNextEventMarket(match)
   }
 }
+
 
 // ── Resolution logic ──────────────────────────────────────────────────────────
 export function resolveMarket(
@@ -420,9 +554,77 @@ export function resolveMarket(
     case 'RED_CARD_THREAT': {
       const red = eventsSinceOpen.find(e => e.type === 'CARD_RED' || e.type === 'CARD_YELLOW_RED')
       if (red) return 'yes'
-      // Resolve 'no' after 15 minutes or at end of half
       if (currentMinute >= market.minuteContext + 15) return 'no'
       if (currentMinute >= 45 && market.minuteContext < 45) return 'no'
+      if (match && match.status === 'FT') return 'no'
+      return null
+    }
+
+    // ── Event-triggered resolutions ───────────────────────────────────────────
+
+    case 'GOAL_RESPONSE': {
+      const concedingSide = market.context?.concedingSide
+      const goal = eventsSinceOpen.find(e =>
+        e.type === 'GOAL' || e.type === 'PENALTY_GOAL' || e.type === 'OWN_GOAL'
+      )
+      if (!goal) {
+        if (currentMinute >= market.minuteContext + 12) return 'no'
+        return null
+      }
+      const goalSide = goal.type === 'OWN_GOAL'
+        ? (goal.side === 'home' ? 'away' : 'home')
+        : goal.side
+      return goalSide === concedingSide ? 'yes' : 'no'
+    }
+
+    case 'BRACE_HUNT': {
+      const scorerSide = market.context?.scorerSide
+      const scorerName = market.context?.scorerName ?? ''
+      const goal = eventsSinceOpen.find(e =>
+        (e.type === 'GOAL' || e.type === 'PENALTY_GOAL') && e.side === scorerSide
+      )
+      if (!goal) {
+        if (currentMinute >= market.minuteContext + 20) return 'no'
+        if (match && (match.status === 'HT' || match.status === 'FT')) return 'no'
+        return null
+      }
+      if (scorerName && goal.playerName) {
+        const last = (s: string) => s.split(' ').slice(-1)[0].toLowerCase()
+        return last(goal.playerName) === last(scorerName) ? 'yes' : 'no'
+      }
+      return 'yes'
+    }
+
+    case 'YELLOW_WATCH': {
+      const warnedSide = market.context?.warnedSide
+      const red = eventsSinceOpen.find(e =>
+        (e.type === 'CARD_RED' || e.type === 'CARD_YELLOW_RED') && e.side === warnedSide
+      )
+      if (red) return 'yes'
+      if (currentMinute >= market.minuteContext + 25) return 'no'
+      if (match && match.status === 'HT' && market.minuteContext < 45) return 'no'
+      if (match && match.status === 'FT') return 'no'
+      return null
+    }
+
+    case 'RED_ADVANTAGE': {
+      const advantageSide = market.context?.advantageSide
+      const goal = eventsSinceOpen.find(e =>
+        (e.type === 'GOAL' || e.type === 'PENALTY_GOAL') && e.side === advantageSide
+      )
+      if (goal) return 'yes'
+      if (currentMinute >= market.minuteContext + 20) return 'no'
+      if (match && match.status === 'FT') return 'no'
+      return null
+    }
+
+    case 'SUB_SPARK': {
+      const subbingSide = market.context?.subbingSide
+      const goal = eventsSinceOpen.find(e =>
+        (e.type === 'GOAL' || e.type === 'PENALTY_GOAL') && e.side === subbingSide
+      )
+      if (goal) return 'yes'
+      if (currentMinute >= market.minuteContext + 20) return 'no'
       if (match && match.status === 'FT') return 'no'
       return null
     }
