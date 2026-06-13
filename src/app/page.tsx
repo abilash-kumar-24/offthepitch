@@ -426,7 +426,7 @@ export default function LobbyPage() {
                 transition={{ delay: 0.28, duration: 0.5 }}
               >
                 {[
-                  { n: '1', label: 'Watch live', icon: '📺' },
+                  { n: '1', label: 'Watch on TV', icon: '📺' },
                   { n: '2', label: 'Make a call', icon: '🎯' },
                   { n: '3', label: 'Track instinct', icon: '📈' },
                 ].map(step => (
